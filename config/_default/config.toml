@@ -1,0 +1,65 @@
+title = "Princeton Gentlemen's Society"
+baseURL = "http://localhost:1313/"
+languageCode = "en-us"
+theme = "alpha-church"
+enableInlineShortcodes = true
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "About"
+    weight = 2
+    [[menu.main]]
+      name = "History"
+      url = "/history"
+      parent = "About"
+      weight = 1
+  	[[menu.main]]
+      name = "Foundation"
+      url = "/foundation"
+      parent = "About"
+      weight = 2
+    [[menu.main]]
+      name = "Turkey Bowl"
+      url = "/turkey_bowl"
+      parent = "About"
+      weight = 3
+    [[menu.main]]
+      name = "Tax Information"
+      url = "/tax"
+      parent = "About"
+      weight = 4
+  [[menu.main]]
+    name = "Donate"
+    url = "/donate"
+    weight = 5
+
+[params]
+  title = "Princeton Gentlemen's Society"
+  subtitle = "Supporting youth sports in central New Jersey"
+  languageCode = "en"
+  instant_page = false
+
+  [params.banner]
+    image = "img/header-bg.jpg"
+
+  [params.contact]
+    #Use this section to automate contact form.
+    #Set service to either "netlify" or "formspree"
+    #For formspree, please setup an account at https://formspree.io/
+    #For netlify, please read https://www.netlify.com/docs/form-handling/
+    #
+    #If you use netlify, you'll need to set the confirm_page value (or elase users will see a generic netlify response)
+    #If you use formspree, you'll need to set your formspree email address.
+    service = "netlify"
+    confirm_page = "/contact_thanks"
+    # formspree_email=""
+
+  [params.footer]
+    copyright = ["&copy; Princeton Gentlemen's Society Foundation",
+    			 "[CC0 (public domain)](//creativecommons.org/publicdomain/zero/1.0/)",
+                 "Design: [HTML5 UP](//html5up.net/alpha)"]
+
