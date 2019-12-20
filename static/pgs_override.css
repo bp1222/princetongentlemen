@@ -1,0 +1,8 @@
+#donation_value_custom_label {
+    font-size: 1em;
+    display: inline;
+}
+#donation_value_custom {
+    width: 10em;
+    display: inline;
+}

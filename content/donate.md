@@ -6,8 +6,4 @@ tags: ""
 draft: false
 ---
 
-### Donations to help Princeton Gentlemen's Society
-
-Donations are tax deductible, now you can donate via PayPal.
-
-{{< paypal >}}
+{{< paypal.inline >}}{{ partial "paypal" . }} {{< /paypal.inline >}}

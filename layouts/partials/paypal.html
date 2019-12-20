@@ -1,0 +1,120 @@
+<script>
+    function clearCustom() {
+        $("#donateForm input:text").val("");
+    }
+
+    function clearRadio(elem) {
+       if (isNaN(elem.value)) {
+           elem.value = "";
+           return;
+       }
+       $('#donateForm input[type="radio"]:checked').prop("checked", false);
+    }
+</script>
+
+<div id="receiptForm" class="row gtr-50 gtr-uniform" style="display: none">
+    <p>
+        Dear <span id="receipt_name"></span>,<br/>
+        Thank you for your donation of $<span name="receipt_amount"></span> to the Princeton Gentlemen's Society Foundation,
+        a foundation that promotes youth sports across central New Jersey.
+    </p>
+
+    <p>
+        Many employers will match employee contributions: please check with your company to see if they have a corporate matching gift program.
+        For your records: Your donation, number <span id="receipt_id"></span>, on <span id="receipt_date"></span> was $<span name="receipt_amount"></span>.
+        This letter may serve as a record of your donation. No goods or services were provided, in whole or in part, for this contribution.
+    </p>
+
+    <p>
+        The Princeton Gentlemen's Society Foundation. is a non-profit charitable corporation with 501(c)(3) tax exempt status in the United States.<br/>
+        Our address is PO Box 2310 Princeton, NJ 08543<br/>
+        U.S. tax-exempt number:  <i>20-5045016</i><br/>
+    </p>
+</div>
+
+<div id="donateForm" class="row gtr-50 gtr-uniform">
+    <div class="col-4">
+        <input type="radio" name="donation_value" id="donation_value_10" value="10" onclick="clearCustom()">
+        <label for="donation_value_10">$10</label>
+    </div>
+
+    <div class="col-4">
+        <input type="radio" name="donation_value" id="donation_value_25" value="25" onclick="clearCustom()">
+        <label for="donation_value_25">$25</label>
+    </div>
+
+    <div class="col-4">
+        <input type="radio" name="donation_value" id="donation_value_50" value="50" onclick="clearCustom()">
+        <label for="donation_value_50">$50</label>
+    </div>
+
+    <div class="col-4">
+        <input type="radio" name="donation_value" id="donation_value_100" value="100" onclick="clearCustom()">
+        <label for="donation_value_100">$100</label>
+    </div>
+
+    <div class="col-4">
+        <input type="radio" name="donation_value" id="donation_value_250" value="250" onclick="clearCustom()">
+        <label for="donation_value_250">$250</label>
+    </div>
+
+    <div class="col-4">
+        <input type="radio" name="donation_value" id="donation_value_500" value="500" onclick="clearCustom()">
+        <label for="donation_value_500">$500</label>
+    </div>
+
+    <div class="col-6">
+        <label id="donation_value_custom_label" for="donation_value_custom">$</label>
+        <input type="text" name="donation_value" id="donation_value_custom" placeholder="Custom Amount" onchange="clearRadio(this)">
+    </div>
+
+    <div class="col-12">
+        <script src="https://www.paypal.com/sdk/js?client-id={{ .Site.Params.paypal.clientID }}&disable-funding=credit,card"></script>
+        <div id="donate-buttons" class="align-center" style="margin: 0 auto; width: 20em;">
+            <div id="paypal-button-container"></div>
+        </div>
+        <script>paypal.Buttons({
+            createOrder: function(data, actions) {
+                let donation = "1.00";
+                let checkbox = $("#donateForm input[type='radio']:checked").val();
+                let custom = $("#donation_value_custom").val();
+
+                if (checkbox != null) {
+                    donation = checkbox;
+                } else if (custom != null) {
+                    donation = custom;
+                }
+
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: donation
+                        }
+                    }],
+                    application_context: {
+                        shipping_preference: "NO_SHIPPING"
+                    },
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    if (details.status != "COMPLETED") {
+                        return;
+                    }
+
+                    let date = new Date(details.create_time);
+                    $("#receipt_date").text(date.toLocaleDateString() + " " + date.toLocaleTimeString());
+                    $("#receipt_id").text(details.id);
+                    $("#receipt_name").text(details.payer.name.given_name + " " + details.payer.name.surname);
+                    $("[name='receipt_amount']").each(function() {
+                        $(this).text(details.purchase_units[0].amount.value);
+                    });
+
+                    $("#donateForm").hide();
+                    $("#receiptForm").show();
+                });
+            },
+        }).render('#paypal-button-container');
+        </script>
+    </div>
+</div>
