@@ -1,6 +1,4 @@
 .idea
-/public
-
 public/
 npm_modules/
 node_modules/

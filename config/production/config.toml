@@ -1,2 +1,4 @@
+baseURL = "https://princetongentlemen.org/"
+
 [params.paypal]
-  clientID = ""
+  clientID = "AUBXoUhCv3GiJKbJjtLgfJeQkjYh9RXpeqKs7LaOBQzyv7IvXFz-9t13U6NcDy2bwzoJcrOKScwScGp6"

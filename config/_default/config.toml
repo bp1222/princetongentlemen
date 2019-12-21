@@ -42,6 +42,9 @@ enableInlineShortcodes = true
   [params.banner]
     image = "img/header-bg.jpg"
 
+  [params.paypal]
+    clientID = "ASNL4jBDcehApGSCy8jTInDUe5g-7oGIIuieajj-q6odlBqpWcGKWEY5Zc-wV6sQcEgw3UKZI-vQNMdo"
+
   [params.contact]
     #Use this section to automate contact form.
     #Set service to either "netlify" or "formspree"
